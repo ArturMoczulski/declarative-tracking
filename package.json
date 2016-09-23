@@ -1,0 +1,21 @@
+{
+  "name": "ga-tracking-framework",
+  "description": "Simple Google Analytics Events tracking for your project.",
+  "version": "0.0.0",
+  "private": true,
+  "author": "Artur Moczulski",
+  "homepage": "",
+  "contributors": [ "Artur Moczulski <artur.moczulski@gmail.com> (https://github.com/arturmoczulski)" ],
+  "dependencies": {
+    "jquery":"*"
+  },
+  "devDependencies": {
+    "qunit": "*"
+  },
+  "keywords": [],
+  "repository": "",
+  "licenses": [{
+    "type": "MIT",
+    "url": "http://opensource.org/licenses/MIT"
+  }]
+}
