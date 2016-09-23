@@ -86,6 +86,7 @@ var DeclarativeTracking = (function() {
         var DeclarativeTracking = new Object();
         DeclarativeTracking.triggers = {};
         DeclarativeTracking.trackers = {};
+        DeclarativeTracking.initialized = false;
         return DeclarativeTracking;
     }
     
@@ -97,11 +98,21 @@ var DeclarativeTracking = (function() {
             return instance;
         },
 
+        unregisterAllTriggers: function() { this.getInstance().triggers = [] },
+
+        unregisterAllTrackers: function() { this.getInstance().trackers = [] },
+
         registerTrigger: function(name, trigger) {
+            if(this.getInstance().triggers[name]) {
+                throw new Error("Trigger "+name+ " has already been registered")
+            }
             this.getInstance().triggers[name] = trigger;
         },
 
         registerTracker: function(name, tracker) {
+            if(this.getInstance().trackers[name]) {
+                throw new Error("Tracker "+name+ " has already been registered")
+            }
             this.getInstance().trackers[name] = tracker;
         },
 
@@ -124,14 +135,22 @@ var DeclarativeTracking = (function() {
                         tracker;
                     
                     if(!triggerName) {
-                        throw Error('Tracking trigger "'+triggerName+'" not defined.');
+                        throw new Error('Tracking trigger attribute not provided.');
                     }
                     if(!trackerName) {
-                        throw Error('Tracker "'+triggerName+'" not defined.');
+                        throw new Error('Tracker attribute not provided.');
                     }
                     
                     trigger = DeclarativeTracking.getTrigger(triggerName);
                     tracker = DeclarativeTracking.getTracker(trackerName);
+
+                    if(!trigger) {
+                        throw new Error('Trigger '+triggerName+' not defined')
+                    }
+                    
+                    if(!tracker) {
+                        throw new Error('Tracker '+trackerName+' not defined')
+                    }
                     
                     console.debug('Attaching '+trackerName+' tracker for trigger '+triggerName+'.');
 
@@ -155,8 +174,14 @@ var DeclarativeTracking = (function() {
 
         init: function() {
 
+            if(this.getInstance().initialized) {
+                throw new Error('DeclarativeTracking already initialized')
+            }
+
             this.registerStandardTriggers();
             this.registerStandardTrackers();
+
+            this.getInstance().initialized = true;
 
         },
     };
