@@ -61,24 +61,32 @@ var DeclarativeTracking = (function() {
         }
     }
 
-    // split this into triggers and event trackers
     // this object supports aliases
     standardTriggers = [
         {
-            name: 'jQuery',
-            binding: function(element) {
+            name: 'jquery',
+            trigger: function(element, tracker) {
 
-                var jQueryEventType = element.attr('data-track-trigger'),
-                    gaEventSpec = gaEventSpecHelper.buildFromElement(element);
+                var jQueryEventType = element.attr('data-track-trigger');
                 
                 if(!jQueryEventType) {
-                    // change this to an exception
-                    console.error('No event jQuery eventy type provided for element');
+                    throw Error('No event jQuery event type provided for element');
                 }
                 
-                element.bind(jQueryEventType, function(jQueryEvent) {
-                    ga('send', 'event', gaEventSpec);
-                });
+                element.bind(jQueryEventType, function() { tracker(element) });
+
+            }
+        }
+    ];
+
+    // this object supports aliases
+    standardTrackers = [
+        {
+            name: 'google-analytics',
+            tracker: function(element) {
+
+                var gaEventSpec = gaEventSpecHelper.buildFromElement(element);
+                ga('send', 'event', gaEventSpec);
 
             }
         }
@@ -113,31 +121,52 @@ var DeclarativeTracking = (function() {
 
         bindTrackers: function() {
                 $('[data-track]').each(function() {
-                    var bindingName = $(this).attr('data-track'),
-                        binding;
+                    /**
+                     * The attributes might seem a bit confusing from development side, but they
+                     * seem easier to use by the end user.
+                     *
+                     * data-track="click"
+                     * data-track-service="google-analytics"
+                     */
+                    var triggerName = $(this).attr('data-track'),
+                        trigger,
+                        trackerName = $(this).attr('data-track-service'),
+                        tracker;
                     
-                    if(!bindingName) {
-                        // change to exceptions
-                        console.error('Tracking binding "'+bindingName+'" not defined.');
+                    if(!triggerName) {
+                        throw Error('Tracking trigger "'+triggerName+'" not defined.');
+                    }
+                    if(!trackerName) {
+                        throw Error('Tracker "'+triggerName+'" not defined.');
                     }
                     
-                    binding = DeclarativeTracking.getTrackingBinding(bindingName);
+                    trigger = DeclarativeTracking.getTrigger(triggerName);
+                    tracker = DeclarativeTracking.getTracker(trackerName);
                     
-                    console.debug('Attaching '+bindingName+' trackers.');
-                    binding($(this));
+                    console.debug('Attaching '+trackerName+' tracker for trigger '+triggerName+'.');
+
+                    trigger($(this), tracker);
                 });
         },
 
         registerStandardTriggers: function() {
             var that = this;
             $.each(standardTriggers, function(i, triggerDescriptor) {
-                that.registerTrigger(triggerDescriptor.name, triggerDescriptor.binding);
+                that.registerTrigger(triggerDescriptor.name, triggerDescriptor.trigger);
+            })
+        },
+
+        registerStandardTrackers: function() {
+            var that = this;
+            $.each(standardTrackers, function(i, trackerDescriptor) {
+                that.registerTracker(trackerDescriptor.name, trackerDescriptor.tracker);
             })
         },
 
         init: function() {
 
-            this.registerstandardTriggers();
+            this.registerStandardTriggers();
+            this.registerStandardTrackers();
 
         },
     };

@@ -46,11 +46,39 @@
 
     QUnit.test("DeclarativeTracking.registerStandardTriggers", function(assert) {
       DeclarativeTracking.registerStandardTriggers();
-      assert.notEqual(DeclarativeTracking.getTrigger('jQuery'), null, "jQuery included in standard triggers");
+      assert.notEqual(DeclarativeTracking.getTrigger('jquery'), null, "jquery included in standard triggers");
     })
 
-    QUnit.test('jquery test', function(assert) {
-      
+    QUnit.test("DeclarativeTracking.registerStandardTrackers", function(assert) {
+      DeclarativeTracking.registerStandardTrackers();
+      assert.notEqual(DeclarativeTracking.getTracker('google-analytics'), null, "google-analytics included in standard trackers");
+    })
+
+    QUnit.test('DeclarativeTracking.init', function(assert) {
+      DeclarativeTracking.init();
+      assert.notEqual(DeclarativeTracking.getTrigger('jquery'), null, "jquery included in standard triggers");
+      assert.notEqual(DeclarativeTracking.getTracker('google-analytics'), null, "google-analytics included in standard trackers");
+    })
+
+    QUnit.test('DeclarativeTracking.bindTrackers', function(assert) {
+
+      var stubTracker = function(element) { result = true },
+          stubTrigger = function(element, tracker) { tracker(element) },
+          result = false;
+
+      (function(parent) {
+
+        parent.append('<a data-track="stub-trigger" data-track-service="stub-track-service"></a>')
+
+      })($('#qunit-fixture'))
+
+      DeclarativeTracking.init();
+      DeclarativeTracking.registerTrigger('stub-trigger', stubTrigger)
+      DeclarativeTracking.registerTracker('stub-track-service', stubTracker)
+      DeclarativeTracking.bindTrackers()
+
+      assert.ok(result, "Binding trackers ok")
+
     })
   </script>
 </body>
