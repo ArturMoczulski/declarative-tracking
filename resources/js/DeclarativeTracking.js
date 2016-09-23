@@ -6,7 +6,8 @@ var DeclarativeTracking = (function() {
     
     var instance,
         gaEventSpecHelper,
-        standardTrackingBindings;
+        standardTriggers,
+        util;
     
     gaEventSpecHelper = {
         buildEventSpec: function(category, action, label, value, fieldsObject) {
@@ -43,7 +44,26 @@ var DeclarativeTracking = (function() {
         }
     }
 
-    standardTrackingBindings = [
+    util = {
+        searchWithAlias: function(term, arr) {
+            var obj;
+
+            while(!obj) {
+                obj = arr[term];
+                if (typeof obj === 'string') {
+                    term = obj;
+                } else {
+                    break;
+                }
+            }
+
+            return obj;
+        }
+    }
+
+    // split this into triggers and event trackers
+    // this object supports aliases
+    standardTriggers = [
         {
             name: 'jQuery',
             binding: function(element) {
@@ -52,6 +72,7 @@ var DeclarativeTracking = (function() {
                     gaEventSpec = gaEventSpecHelper.buildFromElement(element);
                 
                 if(!jQueryEventType) {
+                    // change this to an exception
                     console.error('No event jQuery eventy type provided for element');
                 }
                 
@@ -65,7 +86,8 @@ var DeclarativeTracking = (function() {
     
     function createInstance() {
         var DeclarativeTracking = new Object();
-        DeclarativeTracking.trackingBindings = {};
+        DeclarativeTracking.triggers = {};
+        DeclarativeTracking.trackers = {};
         return DeclarativeTracking;
     }
     
@@ -76,29 +98,26 @@ var DeclarativeTracking = (function() {
             }
             return instance;
         },
-        registerTrackingBinding: function(name, binding) {
-            this.getInstance().trackingBindings[name] = binding;
-        },
-        getTrackingBinding: function(name) {
-            var binding;
 
-            while(!binding) {
-                binding = this.getInstance().trackingBindings[name];
-                if (typeof binding === 'string' || binding instanceof String) {
-                    name = binding;
-                } else {
-                    break;
-                }
-            }
-
-            return binding;
+        registerTrigger: function(name, trigger) {
+            this.getInstance().triggers[name] = trigger;
         },
+
+        registerTracker: function(name, tracker) {
+            this.getInstance().trackers[name] = tracker;
+        },
+
+        getTrigger: function(name) { return util.searchWithAlias(name, this.getInstance().triggers) },
+
+        getTracker: function(name) { return util.searchWithAlias(name, this.getInstance().trackers) },
+
         bindTrackers: function() {
                 $('[data-track]').each(function() {
                     var bindingName = $(this).attr('data-track'),
                         binding;
                     
                     if(!bindingName) {
+                        // change to exceptions
                         console.error('Tracking binding "'+bindingName+'" not defined.');
                     }
                     
@@ -108,15 +127,17 @@ var DeclarativeTracking = (function() {
                     binding($(this));
                 });
         },
-        registerStandardTrackingBindings: function() {
+
+        registerStandardTriggers: function() {
             var that = this;
-            $.each(standardTrackingBindings, function(i, bindingDescriptor) {
-                that.registerTrackingBinding(bindingDescriptor.name, bindingDescriptor.binding);
+            $.each(standardTriggers, function(i, triggerDescriptor) {
+                that.registerTrigger(triggerDescriptor.name, triggerDescriptor.binding);
             })
         },
+
         init: function() {
 
-            this.registerStandardTrackingBindings();
+            this.registerstandardTriggers();
 
         },
     };

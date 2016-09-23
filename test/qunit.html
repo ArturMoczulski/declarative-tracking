@@ -9,6 +9,7 @@
 <body>
   <div id="qunit"></div>
   <div id="qunit-fixture"></div>
+  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
   <script src="https://code.jquery.com/qunit/qunit-2.0.1.js"></script>
   <script src="../resources/js/DeclarativeTracking.js"></script>
   <script>
@@ -17,19 +18,39 @@
       assert.equal( value, "hello", "We expect value to be hello" );
     });
 
-    QUnit.test( "DeclarativeTracking is a singleton", function(assert) {
+    QUnit.test( "DeclarativeTracking.getInstance", function(assert) {
       assert.deepEqual(DeclarativeTracking.getInstance(), DeclarativeTracking.getInstance(), "DeclarativeTracking is a singleton")
     })
 
-    QUnit.test("Register a tracking binding", function(assert) {
-      DeclarativeTracking.registerTrackingBinding('TestBinding', function() {});
-      console.log(DeclarativeTracking.getInstance())
-      assert.notEqual(DeclarativeTracking.getTrackingBinding('TestBinding'), null, "Can register a tracking binding");
+    QUnit.test("DeclarativeTracking.registerTrigger", function(assert) {
+      DeclarativeTracking.registerTrigger('TestTrigger', function() {});
+      assert.notEqual(DeclarativeTracking.getTrigger('TestTrigger'), null, "Can register a trigger");
     });
 
-    QUnit.test("Register standard tracking bindings", function(assert) {
-      DeclarativeTracking.registerStandardTrackingBindings();
-      assert.notEqual(DeclarativeTracking.getTrackingBinding('jQuery'), null, "jQuery included in standard bindings");
+    QUnit.test("DeclarativeTracking.getTrigger by alias", function(assert) {
+      DeclarativeTracking.registerTrigger('TestTrigger', function() {});
+      DeclarativeTracking.registerTrigger('TestTrigger2', 'TestTrigger');
+      assert.notEqual(DeclarativeTracking.getTrigger('TestTrigger'), DeclarativeTracking.getTrigger('TestTrigger2'), "Trigger aliasses work");
+    });
+
+    QUnit.test("DeclarativeTracking.registerTracker", function(assert) {
+      DeclarativeTracking.registerTracker('TestTracker', function() {});
+      assert.notEqual(DeclarativeTracking.getTracker('TestTracker'), null, "Can register a tracker");
+    });
+
+    QUnit.test("DeclarativeTracking.getTracker by alias", function(assert) {
+      DeclarativeTracking.registerTracker('TestTracker', function() {});
+      DeclarativeTracking.registerTracker('TestTracker2', 'TestTracker');
+      assert.notEqual(DeclarativeTracking.getTracker('TestTracker'), DeclarativeTracking.getTracker('TestTracker2'), "Tracker aliasses work");
+    });
+
+    QUnit.test("DeclarativeTracking.registerStandardTriggers", function(assert) {
+      DeclarativeTracking.registerStandardTriggers();
+      assert.notEqual(DeclarativeTracking.getTrigger('jQuery'), null, "jQuery included in standard triggers");
+    })
+
+    QUnit.test('jquery test', function(assert) {
+      
     })
   </script>
 </body>
