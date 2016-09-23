@@ -46,17 +46,11 @@
 
     QUnit.test("DeclarativeTracking.registerStandardTriggers", function(assert) {
       DeclarativeTracking.registerStandardTriggers();
-      assert.notEqual(DeclarativeTracking.getTrigger('jquery'), null, "jquery included in standard triggers");
+      assert.notEqual(DeclarativeTracking.getTrigger('click'), null, "jquery click included in standard triggers");
     })
 
     QUnit.test("DeclarativeTracking.registerStandardTrackers", function(assert) {
       DeclarativeTracking.registerStandardTrackers();
-      assert.notEqual(DeclarativeTracking.getTracker('google-analytics'), null, "google-analytics included in standard trackers");
-    })
-
-    QUnit.test('DeclarativeTracking.init', function(assert) {
-      DeclarativeTracking.init();
-      assert.notEqual(DeclarativeTracking.getTrigger('jquery'), null, "jquery included in standard triggers");
       assert.notEqual(DeclarativeTracking.getTracker('google-analytics'), null, "google-analytics included in standard trackers");
     })
 

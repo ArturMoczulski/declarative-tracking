@@ -64,18 +64,8 @@ var DeclarativeTracking = (function() {
     // this object supports aliases
     standardTriggers = [
         {
-            name: 'jquery',
-            trigger: function(element, tracker) {
-
-                var jQueryEventType = element.attr('data-track-trigger');
-                
-                if(!jQueryEventType) {
-                    throw Error('No event jQuery event type provided for element');
-                }
-                
-                element.bind(jQueryEventType, function() { tracker(element) });
-
-            }
+            name: 'click',
+            trigger: function(element, tracker) { element.bind('click', function() { tracker(element) }) }
         }
     ];
 
