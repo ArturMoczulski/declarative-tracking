@@ -80,7 +80,18 @@ var DeclarativeTracking = (function() {
             this.getInstance().trackingBindings[name] = binding;
         },
         getTrackingBinding: function(name) {
-            return this.getInstance().trackingBindings[name];
+            var binding;
+
+            while(!binding) {
+                binding = this.getInstance().trackingBindings[name];
+                if (typeof binding === 'string' || binding instanceof String) {
+                    name = binding;
+                } else {
+                    break;
+                }
+            }
+
+            return binding;
         },
         bindTrackers: function() {
                 $('[data-track]').each(function() {
@@ -91,7 +102,7 @@ var DeclarativeTracking = (function() {
                         console.error('Tracking binding "'+bindingName+'" not defined.');
                     }
                     
-                    binding = instance.trackingBindings[bindingName];
+                    binding = DeclarativeTracking.getTrackingBinding(bindingName);
                     
                     console.debug('Attaching '+bindingName+' trackers.');
                     binding($(this));
