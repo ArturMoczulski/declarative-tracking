@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ga-tracking-framework tests</title>
+  <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.0.1.css">
+  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+  <script src="https://code.jquery.com/qunit/qunit-2.0.1.js"></script>
+  <script src="../resources/js/ga-tracking-framework.js"></script>
+  <script>
+    QUnit.test( "a basic test example", function( assert ) {
+      var value = "hello";
+      assert.equal( value, "hello", "We expect value to be hello" );
+    });
+
+    QUnit.test( "GATF is a singleton", function(assert) {
+      assert.deepEqual(GATF.getInstance(), GATF.getInstance(), "GATF is a singleton")
+    })
+
+    QUnit.test("Register a tracking binding", function(assert) {
+      GATF.registerTrackingBinding('TestBinding', function() {});
+      console.log(GATF.getInstance())
+      assert.notEqual(GATF.getTrackingBinding('TestBinding'), null, "Can register a tracking binding");
+    });
+
+    QUnit.test("Register standard tracking bindings", function(assert) {
+      GATF.registerStandardTrackingBindings();
+      assert.notEqual(GATF.getTrackingBinding('jQuery'), null, "jQuery included in standard bindings");
+    })
+  </script>
+</body>
+</html>
