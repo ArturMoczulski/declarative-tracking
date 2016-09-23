@@ -1,6 +1,6 @@
 {
-  "name": "ga-tracking-framework",
-  "description": "Simple Google Analytics Events tracking for your project.",
+  "name": "declarative-tracking",
+  "description": "Simple user tracking framework which allows you easy gather information about user behavior with Google Analytics, Facebook and YouTube content.",
   "version": "0.0.0",
   "private": true,
   "author": "Artur Moczulski",
