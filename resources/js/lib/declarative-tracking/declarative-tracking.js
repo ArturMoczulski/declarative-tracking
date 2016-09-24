@@ -45,6 +45,18 @@ define(['require',
                 }
                 this.getInstance().trackers[name] = tracker;
             },
+            
+            registerTackerCallback: function(trackerName, callback) {
+                var tracker = this.getTracker(trackerName)
+                
+                if(!tracker) {
+                    throw new Error(trackerName+" not registered.")
+                }
+                
+                tracker.callbacks ? tracker.callbacks : []
+                
+                tracker.callbacks.push(callback)
+            },
 
             getTrigger: function(name) { return util.searchWithAlias(name, this.getInstance().triggers) },
 

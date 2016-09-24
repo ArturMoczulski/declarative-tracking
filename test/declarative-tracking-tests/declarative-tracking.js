@@ -49,6 +49,14 @@ define(function(require) {
       DeclarativeTracking.registerTracker('stub-tracker2', 'stub-tracker');
       assert.notEqual(DeclarativeTracking.getTracker('stub-tracker'), DeclarativeTracking.getTracker('stub-tracker2'), "Tracker aliasses work");
     });
+    
+    QUnit.test("DeclarativeTracking.registerTrackerCallback", function(assert) {
+      
+      DeclarativeTracking.registerTracker('stub-tracker', function() {})
+      
+      var tracker = DeclarativeTracking.getTracker('stub-tracker');
+      
+    });
 
   QUnit.module( "DeclarativeTracking state dependent", {
     before: function() {

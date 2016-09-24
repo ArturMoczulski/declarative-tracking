@@ -63,31 +63,84 @@
       <div class="row">
         <div class="col-md-12">
           <h2>Google Analytics</h2>
-          <div class="row">
-            <div class="col-md-6">
-              <h3>Outbound Link Tracking</h3>
-              <p>With pure HTML you can send event data to Google Analytics when users click specified links</p>
-              <pre><code class="html">
+          <div class="gapi-embedded">
+            <div id="embed-api-auth-container"></div>
+            <div id="chart-container"></div>
+            <div id="view-selector-container"></div>
+          </div>
+          <h3>Outbound Link Tracking</h3>
+          <p>With pure HTML you can send event data to Google Analytics when users click specified links</p>
+            <pre><code class="html">
 &lt;a data-track=&quot;click&quot;
-   data-track-service=&quot;google-analytics&quot;
-   data-track-event-category=&quot;Outbound link&quot;
-   data-track-event-action=&quot;click&quot;
-   data-track-event-label=&quot;github.com/arturmoczulski/declarative-tracking&quot;
-   href=&quot;github.com/arturmoczulski/declarative-tracking&quot;&gt;
-   Check out GitHub Repo &raquo;
+ data-track-service=&quot;google-analytics&quot;
+ data-track-event-category=&quot;Outbound link&quot;
+ data-track-event-action=&quot;click&quot;
+ data-track-event-label=&quot;github.com/arturmoczulski/declarative-tracking&quot;
+ href=&quot;github.com/arturmoczulski/declarative-tracking&quot;&gt;
+ Check out GitHub Repo &raquo;
 &lt;/a&gt;
-              </code></pre>
-              <p>
+            </code></pre>
+          </p>
+          <h4>Test Conversion tracking by clicking on "Test Conversion" for example offers</h4>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="panel panel-default">
+                <div class="panel-heading">Offer 1</div>
+                <div class="panel-body">
+                  <img src="images/ga-outboundlink-offer-001.jpg"
+                       width="200"/>
+                </div>
+                <div class="panel-footer">
+                  <a data-track="click" 
+                     data-track-service="google-analytics" 
+                     data-track-event-category="Outbound link"
+                     data-track-event-action="click"
+                     data-track-event-label="Offer 1"
+                     class="btn btn-default" 
+                     href="https://github.com/arturmoczulski/declarative-tracking" 
+                     role="button"
+                     target="_blank">Test Conversion &raquo;</a>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">Offer 2</div>
+              <div class="panel-body">
+                <img src="images/ga-outboundlink-offer-002.jpg"
+                     width="200"/>
+              </div>
+              <div class="panel-footer">
                 <a data-track="click" 
                    data-track-service="google-analytics" 
                    data-track-event-category="Outbound link"
                    data-track-event-action="click"
-                   data-track-event-label="github.com/arturmoczulski/declarative-tracking"
+                   data-track-event-label="Offer 2"
                    class="btn btn-default" 
                    href="https://github.com/arturmoczulski/declarative-tracking" 
                    role="button"
-                   target="_blank">Check out GitHub Repo &raquo;</a>
-              </p>
+                   target="_blank">Test Conversion &raquo;</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">Offer 3</div>
+              <div class="panel-body">
+                <img src="images/ga-outboundlink-offer-003.jpg"
+                   width="200"/>
+              </div>
+              <div class="panel-footer">
+                <a data-track="click" 
+                   data-track-service="google-analytics" 
+                   data-track-event-category="Outbound link"
+                   data-track-event-action="click"
+                   data-track-event-label="Offer 3"
+                   class="btn btn-default" 
+                   href="https://github.com/arturmoczulski/declarative-tracking" 
+                   role="button"
+                   target="_blank">Test Conversion &raquo;</a>
+              </div>
             </div>
           </div>
         </div>
@@ -105,7 +158,8 @@
         
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
 
-        <script src="js/main.js"></script>
+
+        <script data-main="js/main.js" src="../../node_modules/requirejs/require.js"></script>
 
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
