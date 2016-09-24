@@ -1,0 +1,28 @@
+{
+  "name": "google-analytics-demo",
+  "homepage": "https://github.com/ArturMoczulski/declarative-tracking",
+  "authors": [
+    "Artur Moczulski <artur.moczulski@gmail.com>"
+  ],
+  "description": "Demo project for declarative-tracking",
+  "main": "index.html",
+  "keywords": [
+    "tracking",
+    "google",
+    "analytics",
+    "declarative-tracking",
+    "analytics"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootbox": "https://github.com/makeusabrew/bootbox"
+  }
+}

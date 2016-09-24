@@ -44,7 +44,13 @@
             <div class="form-group">
               <input type="text" id="ga-tracking-id" placeholder="Google Tracking ID" class="form-control">
             </div>
-            <button type="submit" class="btn btn-success">Change Google Analytics Account</button>
+            <button type="submit" 
+                    id="ga-switch-tracking-id"
+                    class="btn btn-success"
+                    data-track="click"
+                    data-track-service="google-analytics"
+                    data-track-event-category="Change GA Account"
+                    data-track-event-action="click">Switch Google Analytics Account</button>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
@@ -63,11 +69,6 @@
       <div class="row">
         <div class="col-md-12">
           <h2>Google Analytics</h2>
-          <div class="gapi-embedded">
-            <div id="embed-api-auth-container"></div>
-            <div id="chart-container"></div>
-            <div id="view-selector-container"></div>
-          </div>
           <h3>Outbound Link Tracking</h3>
           <p>With pure HTML you can send event data to Google Analytics when users click specified links</p>
             <pre><code class="html">
