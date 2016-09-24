@@ -28,39 +28,12 @@
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">declarative-tracking @ Google Analytics</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form">
-            <div class="form-group">
-              <input placeholder="Your GA Tracking ID" type="text" id="ga-tracking-id" placeholder="Google Tracking ID" class="form-control">
-            </div>
-            <button type="submit" 
-                    id="ga-switch-tracking-id"
-                    class="btn btn-success"
-                    data-track="click"
-                    data-track-service="google-analytics"
-                    data-track-event-category="Change GA Account"
-                    data-track-event-action="click">Switch Google Analytics Account</button>
-          </form>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
         <h1>Event and Goal Conversion Tracking</h1>
-        <p>With <b>declarative-tracking</b> library you can use plain HTML attributes to set up event and goal conversion tracking on your landing pages. No JavaScript programming required!</p>
+        <p>With <b><a href="https://github.com/arturmoczulski/declarative-tracking">declarative-tracking</a></b> library you can use plain HTML attributes to set up event and goal conversion tracking on your landing pages. No <b>JavaScript programming required</b>!</p>
       </div>
     </div>
 
@@ -69,24 +42,58 @@
       <div class="row">
         <div class="col-md-12">
           <h2>Google Analytics</h2>
-          <h3>Outbound Link Tracking</h3>
+          <form role="form">
+            <p>Provide Google Analytics Trackig ID of your Google Analytics property to see the event tracking real-time in your dashboard.</p>
+            <div class="form-group">
+              <input placeholder="Your GA Tracking ID, ie: UA-84588374-2" type="text" id="ga-tracking-id" placeholder="Google Tracking ID" class="form-control">
+            </div>
+            <p><button type="button"
+                    id="ga-switch-tracking-id"
+                    class="btn btn-success"
+                    disabled="true"
+                    data-track="click"
+                    data-track-service="google-analytics"
+                    data-track-event-category="Change GA Account"
+                    data-track-event-action="click">Switch Google Analytics Account</button></p>
+            <div id="ga-switch-tracking-id-success" class="alert alert-success hidden in" role="alert">
+              <h4 class="alert-heading">Great!</h4>
+              <p>Now follow instructions below to see real-time event and goal conversion <b>data being sent to your Google Analytics account as you try out the examples</b> below.</p>
+            </div>
+          </form>
+          <div id="ga-tracking-overview-instructions" class="panel panel-default hidden">
+            <div class="panel-heading">
+              Currently sending event data to: <b><span class="ga-tracking-id"></span></b>
+            </div>
+            <div class="panel-body">
+              Great! Now go to your <b><i><a href="https://analytics.google.com/analytics" target="_blank">Google Analytics Dashboard</a></i></b> and follow these steps to see real-time event data being tracked in your account:
+              <ol>
+                <li>Log in to your account if you're not signed in</li>
+                <li>Go to <b><i>All Web Site Data</i></b> for the property you just switched to tracking to</li>
+                <li>Expand <b><i>Real-Time</i></b> tab on the left and click <b><i>Events</i></b></li>
+                <li>Right under the graph click the <b><i>Events (Last 30 min)</i></b> panel</li>
+                <li>Go back to this demonstration website and start testing events and goal conversions with examples below</li>
+                <li>The event and goal conversion data will be recorded in your Google Analytics account and you should see events coming in real-time</li>
+              </ol>
+            </div>
+          </div>
+          <h3><b>Example:</b> Track when users click on <i>Call To Action</i> buttons and links</h3>
           <p>With pure HTML you can send event data to Google Analytics when users click specified links</p>
             <pre><code class="html">
 &lt;a data-track=&quot;click&quot;
- data-track-service=&quot;google-analytics&quot;
- data-track-event-category=&quot;Outbound link&quot;
- data-track-event-action=&quot;click&quot;
- data-track-event-label=&quot;github.com/arturmoczulski/declarative-tracking&quot;
- href=&quot;github.com/arturmoczulski/declarative-tracking&quot;&gt;
+   data-track-service=&quot;google-analytics&quot;
+   data-track-event-category=&quot;Outbound link&quot;
+   data-track-event-action=&quot;click&quot;
+   data-track-event-label=&quot;youroffer.com&quot;
+   href=&quot;youroffer.com&quot;&gt;
  Check out GitHub Repo &raquo;
 &lt;/a&gt;
             </code></pre>
           </p>
-          <h4>Test Conversion tracking by clicking on "Test Conversion" for example offers</h4>
+          <h4>Test conversion tracking by clicking on <i>Test Conversion</i> buttons for example offers</h4>
           <div class="row">
             <div class="col-md-4">
               <div class="panel panel-default">
-                <div class="panel-heading">Example "New Product"</div>
+                <div class="panel-heading">Example <i>New Product</i></div>
                 <div class="panel-body">
                   <img src="images/ga-outboundlink-offer-001.jpg"
                        width="200"/>
@@ -106,7 +113,7 @@
           </div>
           <div class="col-md-4">
             <div class="panel panel-default">
-              <div class="panel-heading">Example "Product"</div>
+              <div class="panel-heading">Example <i>Product</i></div>
               <div class="panel-body">
                 <img src="images/ga-outboundlink-offer-002.jpg"
                      width="200"/>
@@ -126,7 +133,7 @@
           </div>
           <div class="col-md-4">
             <div class="panel panel-default">
-              <div class="panel-heading">Example "New Product Coming Soon"</div>
+              <div class="panel-heading">Example <i>New Product Coming Soon</i></div>
               <div class="panel-body">
                 <img src="images/ga-outboundlink-offer-003.jpg"
                    width="200"/>
@@ -137,7 +144,6 @@
                    data-track-event-category="Outbound link"
                    data-track-event-action="click"
                    data-track-event-label="Offer New Product Coming Soon"
-                   class="btn btn-default" 
                    href="https://github.com/arturmoczulski/declarative-tracking" 
                    role="button"
                    target="_blank">Test Conversion &raquo;</a>

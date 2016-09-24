@@ -1,7 +1,7 @@
 // GA Tracking Code
 
 var GATrackingId = 'UA-84588374-2',
-    userGATracker;
+    userGATrackingId;
 
 (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
 function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
@@ -26,28 +26,43 @@ $(function() {
     
     // switching GA Tracking Id
     
-    $("#ga-switch-tracking-id").click(function() {
-      var newTrackingId = $("#ga-tracking-id").val(),
-          newTrackerName = 'userTracker'+newTrackingId.replace(/\-/g,'');
+    $("button#ga-switch-tracking-id").click(function() {
+      var newTrackingId = $("input#ga-tracking-id").val(),
+          newTrackerName = 'userTracker'+newTrackingId.replace(/\-/g,''),
+          oldTrackerName = userGATrackingId ? 'userTracker'+userGATrackingId.replace(/\-/g,'') : undefined;
           
-      if(newTrackingId == GATrackingId || newTrackerName == userGATracker) {
+      if(newTrackingId == GATrackingId || newTrackingId == userGATrackingId) {
         return false;
       }
       
-      if(userGATracker) {
-        ga(userGATracker+'.remove')
-        console.debug('Removed previous GA tracker: '+userGATracker)
+      if(userGATrackingId) {
+        ga(oldTrackerName+'.remove')
+        console.debug('Removed previous GA tracker: '+oldTrackerName)
       }
           
-      userGATracker = newTrackerName;
+      userGATrackingId = newTrackingId;
       
-      ga('create', newTrackingId, 'auto', userGATracker)
+      ga('create', newTrackingId, 'auto', newTrackerName)
       
-      bootbox.alert("You switched to send events to a different Google Analytics property.")
+      console.debug('Created new GA tracker: '+newTrackerName)
       
-      console.debug('Created new GA tracker: '+userGATracker)
+      
+      $("div#ga-switch-tracking-id-success, div#ga-tracking-overview-instructions").toggleClass('hidden')
+      $("input#ga-tracking-id").keyup()
+      $('.ga-tracking-id').html(userGATrackingId)
       
       return false;
+    })
+    
+    $("input#ga-tracking-id").keyup(function() {
+      var newTrackingId = $("input#ga-tracking-id").val(),
+          newTrackerName = 'userTracker'+newTrackingId.replace(/\-/g,'');
+          
+      if(!newTrackingId || newTrackingId == GATrackingId || newTrackingId == userGATrackingId) {
+        $("button#ga-switch-tracking-id").prop('disabled', true)
+      } else {
+        $("button#ga-switch-tracking-id").prop('disabled', false)
+      }
     })
     
 })
