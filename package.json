@@ -7,10 +7,11 @@
   "homepage": "",
   "contributors": [ "Artur Moczulski <artur.moczulski@gmail.com> (https://github.com/arturmoczulski)" ],
   "dependencies": {
-    "jquery":"*"
+    "jquery":"*",
+    "requirejs": "*"
   },
   "devDependencies": {
-    "qunit": "*"
+    "qunitjs": "2.0.1"
   },
   "keywords": [],
   "repository": "",
