@@ -1,4 +1,5 @@
 define(['require',
+        './util',
         './trackers/standard-trackers',
         './triggers/standard-triggers'],
         function(require) {
@@ -9,24 +10,7 @@ define(['require',
             DeclarativeTracking,
             standardTriggers = require('./triggers/standard-triggers'),
             standardTrackers = require('./trackers/standard-trackers'),
-            util;
-
-        util = {
-            searchWithAlias: function(term, arr) {
-                var obj;
-
-                while(!obj) {
-                    obj = arr[term];
-                    if (typeof obj === 'string') {
-                        term = obj;
-                    } else {
-                        break;
-                    }
-                }
-
-                return obj;
-            }
-        }
+            util = require('./util');
         
         function createInstance() {
             var DeclarativeTracking = new Object();
