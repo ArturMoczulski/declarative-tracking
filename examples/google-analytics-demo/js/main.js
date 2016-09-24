@@ -19,16 +19,27 @@ ga('create',GATrackingId,'auto');ga('send','pageview');
 
 $(function() {
     
+    // syntax highlighting
     hljs.initHighlightingOnLoad();
     
     $('#ga-tracking-id').val(GATrackingId)
     
+    // initiaite declarative-tracking
     require(['require', 
              '../../../resources/js/lib/declarative-tracking/declarative-tracking'], function(require, declarativeTracking) {
         
         declarativeTracking.init();
         declarativeTracking.bindTrackers();
                      
+    })
+    
+    gapi.analytics.ready(function() {
+      
+      gapi.analytics.auth.authorize({
+        container: 'embed-api-auth-container',
+        clientid: 'REPLACE WITH YOUR CLIENT ID'
+      });
+      
     })
     
 })
