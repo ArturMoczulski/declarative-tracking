@@ -1,7 +1,7 @@
 define(['require',
 	
         'declarative-tracking-tests/declarative-tracking',
-        'declarative-tracking-tests/trackers/google-analytics',
-        'declarative-tracking-tests/triggers/click'],
+        'declarative-tracking-tests/trackers/standard-trackers',
+        'declarative-tracking-tests/triggers/standard-triggers'],
 
        function(require) {})
