@@ -23,6 +23,6 @@
     "tests"
   ],
   "dependencies": {
-    "bootbox": "https://github.com/makeusabrew/bootbox"
+    "bootbox.js": "*"
   }
 }

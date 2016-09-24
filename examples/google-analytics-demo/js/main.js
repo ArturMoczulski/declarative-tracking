@@ -15,8 +15,6 @@ $(function() {
     // syntax highlighting
     hljs.initHighlightingOnLoad();
     
-    $('#ga-tracking-id').val(GATrackingId)
-    
     // initiaite declarative-tracking
     require(['require', 
              '../../../resources/js/lib/declarative-tracking/declarative-tracking'], function(require, declarativeTracking) {
@@ -32,13 +30,16 @@ $(function() {
       var newTrackingId = $("#ga-tracking-id").val(),
           newTrackerName = 'userTracker'+newTrackingId.replace(/\-/g,'');
           
-      if(newTrackingId == GATrackingId || newTrackingId == userGATracker) {
+      if(newTrackingId == GATrackingId || newTrackerName == userGATracker) {
         return false;
       }
           
       userGATracker = newTrackerName;
       
       ga('create', newTrackingId, 'auto', userGATracker)
+      
+      bootbox.alert("You switched to send events to a different Google Analytics property.")
+      
       console.debug('Created new GA tracker: '+userGATracker)
       
       return false;
