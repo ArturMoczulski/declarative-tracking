@@ -84,7 +84,7 @@ define(['require',
                         
                         console.debug('Attaching '+trackerName+' tracker for trigger '+triggerName+'.');
 
-                        trigger($(this), tracker, trigger);
+                        trigger($(this), tracker);
                     });
             },
 
