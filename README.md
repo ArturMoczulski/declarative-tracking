@@ -9,6 +9,8 @@ Simply add `data-track` and `data-track-service` to HTML elements you want to tr
 
 ### Google Analytics
 
+#### Track outbound clicks
+
 For example, if you want to send your data to Google Analytics when users click a specific outbound link:
 ```html
 <a href="example.com"
