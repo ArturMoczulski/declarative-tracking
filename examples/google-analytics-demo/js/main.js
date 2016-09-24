@@ -33,6 +33,11 @@ $(function() {
       if(newTrackingId == GATrackingId || newTrackerName == userGATracker) {
         return false;
       }
+      
+      if(userGATracker) {
+        ga(userGATracker+'.remove')
+        console.debug('Removed previous GA tracker: '+userGATracker)
+      }
           
       userGATracker = newTrackerName;
       
