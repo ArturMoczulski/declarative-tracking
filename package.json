@@ -1,8 +1,8 @@
 {
   "name": "declarative-tracking",
-  "description": "Simple user tracking framework which allows you easy gather information about user behavior with Google Analytics, Facebook and YouTube content.",
+  "description": "Simple user tracking library which allows you to easily gather information about user behavior with Google Analytics, Facebook and YouTube content using just HTML.",
   "version": "0.0.0",
-  "private": true,
+  "private": false,
   "author": "Artur Moczulski",
   "homepage": "",
   "contributors": [ "Artur Moczulski <artur.moczulski@gmail.com> (https://github.com/arturmoczulski)" ],
