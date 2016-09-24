@@ -1,9 +1,12 @@
-define(['require',
-		'./click'],
-	   function (require) {
+define(['require', '../utils/jquery-helper'],
+	   function (require, jqHelper) {
 
 	return [
-		require('./click')
+		{
+	        name: 'click',
+	        trigger: function(element, tracker) { jqHelper.bind(element, tracker, 'click') }
+    	},
+    	
 	]
 
 })

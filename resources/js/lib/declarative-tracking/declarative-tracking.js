@@ -1,5 +1,5 @@
 define(['require',
-        './util',
+        './utils/util',
         './trackers/standard-trackers',
         './triggers/standard-triggers'],
         function(require) {
@@ -10,7 +10,7 @@ define(['require',
             DeclarativeTracking,
             standardTriggers = require('./triggers/standard-triggers'),
             standardTrackers = require('./trackers/standard-trackers'),
-            util = require('./util');
+            util = require('./utils/util');
         
         function createInstance() {
             var DeclarativeTracking = new Object();
