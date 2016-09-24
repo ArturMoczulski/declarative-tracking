@@ -1,4 +1,6 @@
 # declarative-tracking
+*Set up dynamic tracking on your landers with no tech overhead. Just use plain old HTML to track your how people interact with your websites.*
+
 Simple user tracking library which allows you to easily gather information about user behavior with Google Analytics, Facebook and YouTube content using just HTML.
 
 ## Usage
