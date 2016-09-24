@@ -5,8 +5,7 @@ define(['require', '../utils/jquery-helper'],
 		{
 	        name: 'click',
 	        trigger: function(element, tracker) { jqHelper.bind(element, tracker, 'click') }
-    	},
-    	
+    	}
 	]
 
 })
