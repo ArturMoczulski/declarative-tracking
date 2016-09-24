@@ -1,12 +1,13 @@
 define(['require',
-        './trackers/standard-trackers'],
+        './trackers/standard-trackers',
+        './triggers/standard-triggers'],
         function(require) {
 
     return (function() {
         
         var instance,
             DeclarativeTracking,
-            standardTriggers,
+            standardTriggers = require('./triggers/standard-triggers'),
             standardTrackers = require('./trackers/standard-trackers'),
             util;
 
@@ -26,14 +27,6 @@ define(['require',
                 return obj;
             }
         }
-
-        // this object supports aliases
-        standardTriggers = [
-            {
-                name: 'click',
-                trigger: function(element, tracker) { element.bind('click', function() { tracker(element) }) }
-            }
-        ];
         
         function createInstance() {
             var DeclarativeTracking = new Object();
