@@ -20,6 +20,24 @@ define(['declarative-tracking/utils/jquery-helper',
             ga('create', newTrackingId, 'auto', newTrackerName)
             console.debug('Created new GA tracker: '+newTrackerName)
             
+        },
+        gaExamplesUi = {
+            showDataPreviewInstructions: function() {
+                $("div#ga-switch-tracking-id-success, div#ga-tracking-overview-instructions").toggleClass('hidden')
+            },
+            updateUserGATrackingId: function() {
+                $('.ga-tracking-id').html(userGATrackingId)
+            },
+            updateSwitchUserGATrackingButton: function() {
+                var newTrackingId = $("input#ga-tracking-id").val()
+              
+                if(!newTrackingId || newTrackingId == GATrackingId || newTrackingId == userGATrackingId) {
+                    $("button#ga-switch-tracking-id").prop('disabled', true)
+                } else {
+                    $("button#ga-switch-tracking-id").prop('disabled', false)
+                }
+                
+            }
         }
     
     return function() {
@@ -29,50 +47,30 @@ define(['declarative-tracking/utils/jquery-helper',
          */
         $("button#ga-switch-tracking-id").click(function() {
             
+            // Get the new tracking id from the input box
             var newTrackingId = $("input#ga-tracking-id").val()
             
+            // Ignore if the user tracking id didn't change
             if(newTrackingId == GATrackingId || newTrackingId == userGATrackingId) {
                 return false;
             }
           
             updateUserGATracker(newTrackingId)
+            
+            gaExamplesUi.showDataPreviewInstructions()
+            gaExamplesUi.updateUserGATrackingId()
+            gaExamplesUi.updateSwitchUserGATrackingButton()
           
-          /* 
-           * Cleaning up underlying jQuery event handlers
-           * binded previously by declarative-tracker triggers
-           * 
-           * Note: doing this is not a responsibility of declarativeTracking object.
-           * Those bindings were performed by the standard 'click' trigger
-           * through the jquery-helper module. declarativeTracking object
-           * is not responsible for cleaning up after registered triggers.
-           */
-          jqHelper.unbindAll()
-          
-          // rebinding declarative-tracking trackers
-          declarativeTracking.bindTrackers()
-          
-          // show more instructions
-          $("div#ga-switch-tracking-id-success, div#ga-tracking-overview-instructions").toggleClass('hidden')
-          // update the button state
-          $("input#ga-tracking-id").keyup()
-          // display new user property tracking id
-          $('.ga-tracking-id').html(userGATrackingId)
-          
-          return false;
+            return false;
         })
         
         /**
-         * Dynamic disabling of the button
+         * Dynamic disabling of the button as you type GA Tracking Id
          */
         $("input#ga-tracking-id").keyup(function() {
-          var newTrackingId = $("input#ga-tracking-id").val(),
-              newTrackerName = 'userTracker'+newTrackingId.replace(/\-/g,'');
-              
-          if(!newTrackingId || newTrackingId == GATrackingId || newTrackingId == userGATrackingId) {
-            $("button#ga-switch-tracking-id").prop('disabled', true)
-          } else {
-            $("button#ga-switch-tracking-id").prop('disabled', false)
-          }
+            
+            gaExamplesUi.updateSwitchUserGATrackingButton()
+            
         })
         
     }
