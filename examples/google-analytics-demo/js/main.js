@@ -24,7 +24,12 @@ $(function() {
              'declarative-tracking/declarative-tracking',
              'declarative-tracking/utils/google-analytics-helper',
              '../../../examples//google-analytics-demo/js/ui'], 
-            function(require, declarativeTracking, gaHelper, ui) {
+      function(require, declarativeTracking, gaHelper, ui) {
+        
+        /**
+         * Set up user interface
+         */
+        ui.init()
         
         /**
          * Register all standard trackers and initialize dt
@@ -51,11 +56,6 @@ $(function() {
          * DOM - this is the meat of declarative-tracking.
          */
         declarativeTracking.bindTrackers();
-        
-        /**
-         * Set up user interface logic
-         */
-        ui();
                      
     })
     

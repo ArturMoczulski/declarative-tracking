@@ -21,7 +21,7 @@ define(['declarative-tracking/utils/jquery-helper',
             console.debug('Created new GA tracker: '+newTrackerName)
             
         },
-        gaExamplesUi = function() {
+        gaExamples = function() {
             
             var ui = { components: {} },
                 comps = ui.components
@@ -52,7 +52,7 @@ define(['declarative-tracking/utils/jquery-helper',
                 updateUserGATracker(newTrackingId)
                 
                 comps.trackingPreviewInstructions.toggleClass('hidden')
-                comps.switchTrackingIdButton.toggleClass('hidden')
+                comps.switchTrackingIdSuccessMessage.toggleClass('hidden')
                 
                 comps.userTrackingIdDisplay.update()
                 
@@ -77,9 +77,12 @@ define(['declarative-tracking/utils/jquery-helper',
             
         }
     
-    return function() {
+    return {
         
-        gaExamplesUi()
+        init: function() {
+            
+            this.gaExamples = gaExamples()
+        }
         
     }
     
