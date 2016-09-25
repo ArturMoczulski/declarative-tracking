@@ -28,9 +28,9 @@ define(['require',
                 return instance;
             },
 
-            unregisterAllTriggers: function() { this.getInstance().triggers = [] },
+            unregisterAllTriggers: function() { this.getInstance().triggers = {} },
 
-            unregisterAllTrackers: function() { this.getInstance().trackers = [] },
+            unregisterAllTrackers: function() { this.getInstance().trackers = {} },
 
             registerTrigger: function(name, trigger) {
                 if(this.getInstance().triggers[name]) {
@@ -53,9 +53,10 @@ define(['require',
                     throw new Error(trackerName+" not registered.")
                 }
                 
-                tracker.callbacks ? tracker.callbacks : []
+                tracker.callbacks = tracker.callbacks ? tracker.callbacks : []
                 
                 tracker.callbacks.push(callback)
+                
             },
 
             getTrigger: function(name) { return util.searchWithAlias(name, this.getInstance().triggers) },
@@ -104,6 +105,10 @@ define(['require',
                         trigger($(this), function(element) {
                             $.each(trackers, function(i, tracker) {
                                 tracker(element)
+                                
+                                $.each(tracker.callbacks, function(i, callback) {
+                                    callback(element)
+                                })
                             })
                         });
                     });

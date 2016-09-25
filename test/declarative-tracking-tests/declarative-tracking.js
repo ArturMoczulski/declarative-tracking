@@ -1,6 +1,11 @@
 define(['require','jquery','declarative-tracking/declarative-tracking'], function(require, $, DeclarativeTracking) {
 
-  QUnit.module( "DeclarativeTracking state independent");
+  QUnit.module( "DeclarativeTracking state independent", {
+    afterEach: function() {
+      DeclarativeTracking.unregisterAllTriggers();
+      DeclarativeTracking.unregisterAllTrackers();
+    }
+  });
 
     QUnit.test("DeclarativeTracking.registerTrigger", function(assert) {
       DeclarativeTracking.registerTrigger('stub-trigger', function() {});
@@ -54,6 +59,10 @@ define(['require','jquery','declarative-tracking/declarative-tracking'], functio
       
       var tracker = DeclarativeTracking.getTracker('stub-tracker');
       
+      DeclarativeTracking.registerTackerCallback('stub-tracker', function() {})
+      
+      assert.equal(tracker.callbacks.length, 1, "Tracker callback registered")
+      
     });
 
   QUnit.module( "DeclarativeTracking state dependent", {
@@ -106,14 +115,57 @@ define(['require','jquery','declarative-tracking/declarative-tracking'], functio
             
           }
 
-      (function(parent) {
-
-        parent.append('<a data-track="stub-trigger" data-track-service="stub-track-service"></a>')
-
-      })($('#qunit-fixture'))
+      $('#qunit-fixture').append('<a data-track="stub-trigger" data-track-service="stub-track-service"></a>')
 
       DeclarativeTracking.registerTrigger('stub-trigger', stubTrigger)
       DeclarativeTracking.registerTracker('stub-track-service', stubTracker)
+      DeclarativeTracking.bindTrackers()
+
+      assert.expect(1)
+
+    })
+    
+    QUnit.test('DeclarativeTracking.bindTrackers multiple trackers', function(assert) {
+
+      var stubTracker1 = function(element) {
+            assert.ok(true, "stub-tracker1 fired") 
+          },
+          stubTracker2 = function(element) {
+            assert.ok(true, "stub-tracker2 fired") 
+          },
+          stubTracker3 = function(element) {
+            assert.ok(true, "stub-tracker3 fired") 
+          },
+          stubTrigger = function(element, tracker) { 
+            tracker(element) 
+            
+          }
+
+      $('#qunit-fixture').append('<a data-track="stub-trigger" data-track-service="stub-track-service1,stub-track-service2, stub-track-service3"></a>')
+
+      DeclarativeTracking.registerTrigger('stub-trigger', stubTrigger)
+      DeclarativeTracking.registerTracker('stub-track-service1', stubTracker1)
+      DeclarativeTracking.registerTracker('stub-track-service2', stubTracker2)
+      DeclarativeTracking.registerTracker('stub-track-service3', stubTracker3)
+      DeclarativeTracking.bindTrackers()
+
+      assert.expect(3)
+
+    })
+    
+    QUnit.test('DeclarativeTracking.bindTrackers fire tracker callbacks', function(assert) {
+
+      var stubTracker = function(element) {},
+          stubTrigger = function(element, tracker) { tracker(element) }
+
+      $('#qunit-fixture').append('<a data-track="stub-trigger" data-track-service="stub-track-service"></a>')
+
+      stubTracker.testName = 'callbacks'
+      DeclarativeTracking.registerTrigger('stub-trigger', stubTrigger)
+      DeclarativeTracking.registerTracker('stub-track-service', stubTracker)
+      DeclarativeTracking.registerTackerCallback('stub-track-service', function() {
+        assert.ok(true, 'callback for stub-track-service fired')
+      })
       DeclarativeTracking.bindTrackers()
 
       assert.expect(1)
