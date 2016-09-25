@@ -1,8 +1,22 @@
 define(function() {
+    
+    var boundEventHandlers = []
 
 	return {
 		bind: function(element, tracker, eventType) { 
-            element.bind(eventType, function() { tracker(element) })
+		    var eventHandler = function() { tracker(element) }
+		    boundEventHandlers.push({
+		        element: element,
+		        eventType: eventType,
+		        eventHandler: eventHandler
+		    })
+		    
+            element.bind(eventType, eventHandler)
+		},
+		unbindAll: function() {
+		    $.each(boundEventHandlers, function(i, bindingSpec) {
+		        bindingSpec.element.unbind(bindingSpec.eventType, bindingSpec.eventHandler)
+		    })
 		}
     }
     
