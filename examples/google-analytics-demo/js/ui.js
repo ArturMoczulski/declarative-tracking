@@ -31,6 +31,7 @@ define(['declarative-tracking/utils/jquery-helper',
             comps.userTrackingIdDisplay = $('.ga-tracking-id')
             comps.userTrackingIdInput = $("input#ga-tracking-id")
             comps.switchTrackingIdButton = $("button#ga-switch-tracking-id")
+            comps.outboundConversionSuccessModalContent = $('.ga-tracking-modal-outbound-success')
             
             
             comps.userTrackingIdInput.keyup(function() {
@@ -72,6 +73,12 @@ define(['declarative-tracking/utils/jquery-helper',
             }
             
             comps.userTrackingIdDisplay.update = function() { $(this).html(userGATrackingId) }
+            
+            declarativeTracking.registerTackerCallback('google-analytics-user-property', function(element) {
+                bootbox.dialog({
+                    message: comps.outboundConversionSuccessModalContent.html()
+                })
+            })
             
             return ui
             

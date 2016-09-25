@@ -27,11 +27,6 @@ $(function() {
       function(require, declarativeTracking, gaHelper, ui) {
         
         /**
-         * Set up user interface
-         */
-        ui.init()
-        
-        /**
          * Register all standard trackers and initialize dt
          */
         declarativeTracking.init();
@@ -56,6 +51,11 @@ $(function() {
          * DOM - this is the meat of declarative-tracking.
          */
         declarativeTracking.bindTrackers();
+        
+        /**
+         * Set up user interface
+         */
+        ui.init()
                      
     })
     
