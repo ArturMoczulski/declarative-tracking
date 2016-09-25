@@ -73,30 +73,39 @@ define(['require',
                          */
                         var triggerName = $(this).attr('data-track'),
                             trigger,
-                            trackerName = $(this).attr('data-track-service'),
-                            tracker;
+                            trackerNames = $(this).attr('data-track-service'),
+                            trackers = [];
                         
                         if(!triggerName) {
                             throw new Error('Tracking trigger attribute not provided.');
                         }
-                        if(!trackerName) {
+                        if(!trackerNames) {
                             throw new Error('Tracker attribute not provided.');
                         }
                         
                         trigger = DeclarativeTracking.getTrigger(triggerName);
-                        tracker = DeclarativeTracking.getTracker(trackerName);
 
                         if(!trigger) {
                             throw new Error('Trigger '+triggerName+' not defined')
                         }
                         
-                        if(!tracker) {
-                            throw new Error('Tracker '+trackerName+' not defined')
-                        }
+                        $.each(trackerNames.split(/, ?/), function(i, trackerName) {
+                            var tracker = DeclarativeTracking.getTracker(trackerName)
+                            
+                            if(!trackers) {
+                                throw new Error('Tracker '+trackerName+' not defined')
+                            }
                         
-                        console.debug('Attaching '+trackerName+' tracker for trigger '+triggerName+'.');
+                            trackers.push(tracker)
+                        })
+                        
+                        console.debug('Attaching '+trackerNames+' for trigger '+triggerName+'.');
 
-                        trigger($(this), tracker);
+                        trigger($(this), function(element) {
+                            $.each(trackers, function(i, tracker) {
+                                tracker(element)
+                            })
+                        });
                     });
             },
 

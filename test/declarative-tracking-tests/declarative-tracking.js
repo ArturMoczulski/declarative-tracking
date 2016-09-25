@@ -98,8 +98,7 @@ define(function(require) {
     QUnit.test('DeclarativeTracking.bindTrackers', function(assert) {
 
       var stubTracker = function(element) { assert.ok(true, "stub-tracker fired") },
-          stubTrigger = function(element, tracker) { tracker(element) },
-          result = false;
+          stubTrigger = function(element, tracker) { tracker(element) }
 
       (function(parent) {
 

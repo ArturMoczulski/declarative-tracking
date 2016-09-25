@@ -18,7 +18,7 @@ define(function(require) {
 
 	  QUnit.test('trigger: click', function(assert) {
 
-	    var stubTrackService = function() { assert.ok(true, "stub-track-service fired") },
+	    var stubTrackService = function() { debugger; assert.ok(true, "stub-track-service fired") },
 	        element;
 
 	    (function(parent) {
