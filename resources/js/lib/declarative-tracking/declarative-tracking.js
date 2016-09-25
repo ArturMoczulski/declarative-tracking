@@ -92,6 +92,8 @@ define(['require',
                         
                         $.each(trackerNames.split(/, ?/), function(i, trackerName) {
                             var tracker = DeclarativeTracking.getTracker(trackerName)
+                        
+                            console.debug('Attaching '+trackerName+' for trigger '+triggerName+'.');
                             
                             if(!trackers) {
                                 throw new Error('Tracker '+trackerName+' not defined')
@@ -99,16 +101,17 @@ define(['require',
                         
                             trackers.push(tracker)
                         })
-                        
-                        console.debug('Attaching '+trackerNames+' for trigger '+triggerName+'.');
 
                         trigger($(this), function(element) {
                             $.each(trackers, function(i, tracker) {
-                                tracker(element)
                                 
-                                $.each(tracker.callbacks, function(i, callback) {
-                                    callback(element)
-                                })
+                                tracker(element)
+                                                    
+                                if(tracker.callbacks) {
+                                    $.each(tracker.callbacks, function(i, callback) {
+                                        callback(element)
+                                    })
+                                }
                             })
                         });
                     });

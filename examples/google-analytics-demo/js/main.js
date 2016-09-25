@@ -15,9 +15,15 @@ $(function() {
     // syntax highlighting
     hljs.initHighlightingOnLoad();
     
+    require.config({
+    	baseUrl: "../../../resources/js/lib"
+    })
+    
     // initiaite declarative-tracking
     require(['require', 
-             '../../../resources/js/lib/declarative-tracking/declarative-tracking'], function(require, declarativeTracking) {
+             'declarative-tracking/declarative-tracking',
+             'declarative-tracking/utils/google-analytics-helper'], 
+            function(require, declarativeTracking, gaHelper) {
         
         declarativeTracking.init();
         declarativeTracking.bindTrackers();
