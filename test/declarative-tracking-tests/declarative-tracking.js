@@ -1,6 +1,4 @@
-define(function(require) {
-    
-  var DeclarativeTracking = require('declarative-tracking/declarative-tracking')
+define(['require','jquery','declarative-tracking/declarative-tracking'], function(require, $, DeclarativeTracking) {
 
   QUnit.module( "DeclarativeTracking state independent");
 
@@ -64,6 +62,9 @@ define(function(require) {
       DeclarativeTracking.unregisterAllTrackers();
 
       DeclarativeTracking.init();
+      
+      DeclarativeTracking.unregisterAllTriggers();
+      DeclarativeTracking.unregisterAllTrackers();
     },
     afterEach: function() {
       DeclarativeTracking.unregisterAllTriggers();
@@ -97,8 +98,13 @@ define(function(require) {
 
     QUnit.test('DeclarativeTracking.bindTrackers', function(assert) {
 
-      var stubTracker = function(element) { assert.ok(true, "stub-tracker fired") },
-          stubTrigger = function(element, tracker) { tracker(element) }
+      var stubTracker = function(element) {
+            assert.ok(true, "stub-tracker fired") 
+          },
+          stubTrigger = function(element, tracker) { 
+            tracker(element) 
+            
+          }
 
       (function(parent) {
 
