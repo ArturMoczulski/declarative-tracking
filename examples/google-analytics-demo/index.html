@@ -45,7 +45,7 @@
           <form role="form">
             <p>Provide Google Analytics Trackig ID of your Google Analytics property to see the event tracking real-time in your dashboard.</p>
             <div class="form-group">
-              <input placeholder="Your GA Tracking ID, ie: UA-84588374-2" type="text" id="ga-tracking-id" placeholder="Google Tracking ID" class="form-control">
+              <input placeholder="Your GA Tracking ID, ie: UA-84588374-2" type="text" id="ga-tracking-id" class="form-control">
             </div>
             <p><button type="button"
                     id="ga-switch-tracking-id"
@@ -156,6 +156,36 @@
             <p>It will be visible in Analytics by going to <i>Real-time</i> &raquo; <i>Events</i> &raquo; <i>Events (Last 30 min)</i></p>
           </div>
         </div>
+        
+        <h3><b>Example:</b> Track when users sign up for your <i>email list</i></h3>
+        <p>Want to track people that sign up to your email list? It's simple! You track it the same way as an outbound link.</p>
+        <h4>Click <i>Try email squeeze popup</i> to check it out.</h4>
+        <button class="btn btn-success jumbotron" id="ga-email-squeeze-open-button">
+          Try Email Squeeze Signup Tracking
+        </button>
+        <div class="hidden" id="ga-tracking-modal-email-squeeze-content">
+          <h3>declarative-tracking let's you easily track your email squeeze conversion!</h3>
+          <form role="form" id="ga-tracking-modal-email-squeeze-form">
+            <p>Provide your email address and click <i>Sign Up</i> to send event data to your Google Analytics!</p>
+            <div class="alert alert-info">
+              Don't worry! <b>I don't actually collect email addresses</b> so I won't send you any spam. This is just a dummy sign up button.
+            </div>
+            <p>The result of your sign up will be visible in Analytics by going to <i>Real-time</i> &raquo; <i>Events</i> &raquo; <i>Events (Last 30 min)</i></p>
+            <div class="form-group">
+              <input required placeholder="Your email address here... it doesn't even have to be real ;)" type="email" id="ga-email-squeeze-email" class="form-control">
+            </div>
+            <p><button type="button"
+                       id="ga-email-squeeze-signup"
+                       class="btn btn-success center-block"
+                       disabled="true"
+                       data-track="click"
+                       data-track-service="google-analytics"
+                       data-track-event-category="Google Analytics Email Squeeze"
+                       data-track-event-action="signup">Sign Up</button>
+            </p>
+          </form>
+        </div>
+        
       </div>
 
       <hr>
@@ -163,7 +193,7 @@
       <footer>
         <p>&copy; RazorProfit LLC 2016</p>
       </footer>
-    </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    </div> <!-- /container -->
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
         <script src="js/vendor/bootstrap.min.js"></script>

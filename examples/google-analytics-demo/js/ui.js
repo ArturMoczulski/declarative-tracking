@@ -33,6 +33,13 @@ define(['declarative-tracking/utils/jquery-helper',
             comps.switchTrackingIdButton = $("button#ga-switch-tracking-id")
             comps.outboundConversionSuccessModalContent = $('.ga-tracking-modal-outbound-success')
             
+            comps.emailSqueezeModal = {}
+            comps.emailSqueezeModal.openButton = $('#ga-email-squeeze-open-button')
+            comps.emailSqueezeModal.content = $('#ga-tracking-modal-email-squeeze-content')
+            comps.emailSqueezeModal.signupForm = $('#ga-tracking-modal-email-squeeze-form')
+            comps.emailSqueezeModal.emailAddressInput = $('#ga-email-squeeze-email')
+            comps.emailSqueezeModal.signupButton = $('#ga-email-squeeze-signup')
+            
             
             comps.userTrackingIdInput.keyup(function() {
             
@@ -72,12 +79,28 @@ define(['declarative-tracking/utils/jquery-helper',
                 }
             }
             
-            comps.userTrackingIdDisplay.update = function() { $(this).html(userGATrackingId) }
-            
             declarativeTracking.registerTackerCallback('google-analytics-user-property', function(element) {
                 bootbox.dialog({
                     message: comps.outboundConversionSuccessModalContent.html()
                 })
+            })
+            
+            comps.userTrackingIdDisplay.update = function() { $(this).html(userGATrackingId) }
+            
+            comps.emailSqueezeModal.openButton.click(function() {
+                bootbox.dialog({
+                    message: comps.emailSqueezeModal.content.html()
+                })
+            })
+            
+            debugger;
+            comps.emailSqueezeModal.emailAddressInput.keyup(function() {
+                debugger;
+                if($(this).val()) {
+                    comps.emailSqueezeModal.signupButton.prop('disabled',false)
+                } else {
+                    comps.emailSqueezeModal.signupButton.prop('disabled',true)    
+                }
             })
             
             return ui
