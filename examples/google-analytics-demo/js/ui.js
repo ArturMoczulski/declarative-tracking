@@ -93,9 +93,7 @@ define(['declarative-tracking/utils/jquery-helper',
                 })
             })
             
-            debugger;
             comps.emailSqueezeModal.emailAddressInput.keyup(function() {
-                debugger;
                 if($(this).val()) {
                     comps.emailSqueezeModal.signupButton.prop('disabled',false)
                 } else {
